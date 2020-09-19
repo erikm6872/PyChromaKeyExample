@@ -1,15 +1,19 @@
 import cv2
 import numpy as np
 from PIL import Image
-import GreenScreen
-from GUI import GreenScreenGUI
+from pychromakey import ChromaKey, ChromaKeyGUI
+import pyscreenshot as ImageGrab
 
 import constants
 
+def capture_background(bounds):
+    """Captures a portion of the computer screen"""
+    im = ImageGrab.grab(bbox=bounds)
+    return im
 
 def main():
     """Main program loop"""
-    with GreenScreenGUI(constants.SHOW_PREVIEW) as gui:
+    with ChromaKeyGUI.ChromaKeyGUI(constants.SHOW_PREVIEW) as gui:
 
         # Set up video capture
         vc_bg = None
@@ -43,7 +47,7 @@ def main():
                 foreground_array = cv2.resize(foreground_array, constants.RESIZE_VIDEO)
 
             image_stats = Image.fromarray(foreground_array)
-            gs = GreenScreen.GreenScreen((image_stats.width, image_stats.height))
+            gs = ChromaKey.ChromaKey((image_stats.width, image_stats.height))
 
             if constants.USE_TEST_BG_IMAGE:
                 background_array = np.array(test_background)
@@ -56,7 +60,7 @@ def main():
                     vc_bg = cv2.VideoCapture(constants.TEST_BACKGROUND_VIDEO_PATH)
             else:
                 background_array = np.array(
-                    GreenScreen.capture_background(
+                    capture_background(
                         (constants.BG_X_OFFSET,
                          constants.BG_Y_OFFSET,
                          image_stats.width + constants.BG_X_OFFSET,
@@ -69,9 +73,7 @@ def main():
                 foreground_array,
                 background_array,
                 gui.lower_green,
-                gui.upper_green,
-                gs.signal_width,
-                gs.signal_height)
+                gui.upper_green)
 
             # Update GUI image, repeat until Escape key is pressed
             gui.update_preview(new_frame)
