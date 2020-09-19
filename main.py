@@ -1,15 +1,17 @@
 import cv2
 import numpy as np
 from PIL import Image
-from pychromakey import ChromaKey, ChromaKeyGUI
 import pyscreenshot as ImageGrab
+from pychromakey import ChromaKey, ChromaKeyGUI
 
 import constants
+
 
 def capture_background(bounds):
     """Captures a portion of the computer screen"""
     im = ImageGrab.grab(bbox=bounds)
     return im
+
 
 def main():
     """Main program loop"""
