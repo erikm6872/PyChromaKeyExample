@@ -6,7 +6,7 @@ USE_TEST_BG_IMAGE = True    # Using the test background image reduces lag signif
 USE_TEST_FG_VIDEO = False
 USE_TEST_BG_VIDEO = False   # Background videos are currently bugged. TODO: FIX
 
-TEST_FOREGROUND_IMAGE_PATH = 'res/greenscreen_test.jpg'
+TEST_FOREGROUND_IMAGE_PATH = 'res/green_test.png'
 TEST_BACKGROUND_IMAGE_PATH = 'res/background_image.jpg'
 TEST_FOREGROUND_VIDEO_PATH = 'res/sample_greenscreen_video.mp4'
 TEST_BACKGROUND_VIDEO_PATH = 'res/space.mp4'
