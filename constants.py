@@ -22,7 +22,3 @@ BG_Y_OFFSET = 10
 RESIZE_VIDEO = 0
 
 SHOW_PREVIEW = True
-
-# Web server configs
-STREAM_HTTP = True
-HTTP_PORT = 1738
