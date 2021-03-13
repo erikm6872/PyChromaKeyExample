@@ -15,7 +15,7 @@ def capture_background(bounds):
 
 def main():
     """Main program loop"""
-    with ChromaKeyGUI.ChromaKeyGUI(constants.SHOW_PREVIEW) as gui:
+    with ChromaKeyGUI.ChromaKeyGUI(constants.SHOW_PREVIEW, constants.LOWER_GREEN, constants.UPPER_GREEN) as gui:
 
         # Set up video capture
         vc_bg = None
@@ -28,8 +28,6 @@ def main():
         frame = None
         test_foreground = cv2.imread(constants.TEST_FOREGROUND_IMAGE_PATH)
         test_background = cv2.imread(constants.TEST_BACKGROUND_IMAGE_PATH)
-        if vc.isOpened():
-            rval, frame = vc.read()
 
         if constants.USE_TEST_BG_VIDEO:
             vc_bg = cv2.VideoCapture(constants.TEST_BACKGROUND_VIDEO_PATH)
@@ -38,6 +36,11 @@ def main():
         while vc.isOpened():
 
             gui.update_values()
+
+            rval, frame = vc.read()
+            if not rval:
+                vc.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                rval, frame = vc.read()
 
             # Set up input images
             if constants.USE_TEST_FG_IMAGE:
@@ -57,9 +60,9 @@ def main():
                 bg_rval, background_array = vc_bg.read()
 
                 # If the background video ends, restart it
-                # TODO: Fix this shit. It doesn't work
-                if not vc_bg.isOpened():
-                    vc_bg = cv2.VideoCapture(constants.TEST_BACKGROUND_VIDEO_PATH)
+                if not bg_rval:
+                    vc_bg.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                    bg_rval, background_array = vc_bg.read()
             else:
                 background_array = np.array(
                     capture_background(
@@ -80,12 +83,12 @@ def main():
             # Update GUI image, repeat until Escape key is pressed
             gui.update_preview(new_frame)
 
-            rval, frame = vc.read()
-
-            key = cv2.waitKey(20)
-            if key == 27:
+            # TODO: Find a way to exit on keypress. This solution does not work.
+            if cv2.waitKey(1) == 27:
                 break
+
         vc.release()
+        cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
