@@ -19,6 +19,6 @@ BG_Y_OFFSET = 10
 
 # Set to 0 to keep original size. format: (height, width), eg (800, 600).
 # Warning: High-res videos can cause significant lag. Videos larger than 1080p are not recommended.
-RESIZE_VIDEO = (800, 600)
+RESIZE_VIDEO = 0
 
 SHOW_PREVIEW = True
