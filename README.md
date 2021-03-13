@@ -3,6 +3,8 @@ Example project for [PyChromaKey](https://pypi.org/project/PyChromaKey/). Both t
 based on [this article](https://medium.com/fnplus/blue-or-green-screen-effect-with-open-cv-chroma-keying-94d4a6ab2743)
 by Teja Kummarikuntla.
 
+![](res/example.gif)
+
 ## Prerequisites
 * opencv-python
 * numpy
