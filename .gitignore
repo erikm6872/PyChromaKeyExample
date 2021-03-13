@@ -141,6 +141,4 @@ dmypy.json
 .idea
 .idea/
 
-*.mp4
-
 # End of https://www.toptal.com/developers/gitignore/api/python
